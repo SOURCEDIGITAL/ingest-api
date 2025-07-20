@@ -1,0 +1,1416 @@
+openapi: 3.0.4
+info:
+  title: Swagger Tapestry Thread Interface
+  description: |-
+    This is an incomplete description of the full UPSERT API for use with ETL systems integrating with Tapestry
+    
+    In this document,
+      - External ID's must be unique across the entire Tapestry system and must be in the format **\<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>**
+      - **rootUUID** is the primary thread type that is used to identify a specific source of data, typically the internal UUID of the Shop 
+      - **sourceCollection** is the name of the collection of records on the source system this data was extracted from, typically the name of the table
+      - **sourcePrimaryKey** is the primary key of the record on the source system this data was extracted from, typically the primary key of the table
+  contact:
+    email: team@tapestry.ai
+  license:
+    name: Confidential
+    url: https://www.tapestry.ai
+  version: 1.0.0
+externalDocs:
+  description: See related ETL Documentation on Confluence
+  url: https://tapestry-ai.atlassian.net/wiki/x/iwCKBQ
+servers:
+  - url: https://stg.ingest.tapestry.dev
+  - url: https://ingest.tapestry.dev
+tags:
+  - name: fetch
+    description: Everything for fetching data you own in tapestry
+    externalDocs:
+      description: Additional info for PostgREST API
+      url: https://docs.postgrest.org/en/v12/references/api/tables_views.html#read
+  - name: modify
+    description: Everything for changing the data in tapestry
+    externalDocs:
+      description: Additional info for PostgREST API
+      url: https://docs.postgrest.org/en/v12/references/api/functions.html
+paths:
+  /template_thread:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all Thread Types
+      description: Fetch all Thread Types in Tapestry
+      operationId: getThreadTypes
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/template_thread'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+  /thread:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all owned Thread
+      description: Fetch all owned Threads in Tapestry
+      operationId: getThreads
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thread'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+  /thread_department:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all owned Departments
+      description: Fetch all owned Departments in Tapestry including their relationships
+      operationId: getDepartments
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thread_department'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+  /thread_category:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all owned Categories
+      description: Fetch all owned Categories in Tapestry including their relationships
+      operationId: getCategories
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thread_category'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+  /thread_product:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all owned Products
+      description: Fetch all owned Products in Tapestry including their relationships
+      operationId: getProducts
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thread_product'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+  /thread_transaction:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all owned Transactions
+      description: Fetch all owned Transactions in Tapestry including their relationships
+      operationId: getTransactions
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thread_transaction'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+  /rpc/upsert_thread_v1:
+    post:
+      tags:
+        - modify
+      summary: Submit UPSERT payload
+      description: Submit payload for UPSERT to Tapestry
+      operationId: upsertV1
+      requestBody:
+        description: Payload Format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Upsert'
+            examples:
+              Department:
+                summary: Example Department
+                value:
+                  type_uuid: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+                  external_origin: {"source": "PoS System"}
+                  payload:
+                    - external_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Dept|12345'
+                      external_parent_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Shop|12345'
+                      external_child_id: []
+                      assert_parents_complete:
+                        - department
+                      title: Fresh Produce
+                      class_props:
+                      eavprops:
+                        prop1: 1234
+                        prop2: "text string"
+                        prop3: false
+              Category:
+                summary: Example Category
+                value:
+                  type_uuid: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+                  external_origin: {"source": "PoS System"}
+                  payload:
+                    - external_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Cat|12345'
+                      external_parent_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Dept|12345'
+                      external_child_id: ['c75bc2f4-c783-433c-8297-40cf58b677af|Prod|23456', 'c75bc2f4-c783-433c-8297-40cf58b677af|Prod|34567']
+                      assert_children_complete:
+                        - product
+                      title: Fresh Fruit
+                      class_props:
+                      eavprops:
+                        prop1: 1234
+                        prop2: "text string"
+                        prop3: false
+              Product:
+                summary: Example Product
+                value:
+                  type_uuid: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+                  external_origin: {"source": "PoS System"}
+                  payload:
+                    - external_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Prod|23456'
+                      external_parent_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Cat|12345'
+                      external_child_id: []
+                      title: Excellent Oranges 2kg
+                      class_props:
+                        ordering_index: 12
+                        qty: 8
+                        unit_size: 2
+                        unit_price: 12.34
+                        sku: "0000000004011"
+                        unit_of_measure: kg
+                        unit_price_cost: 6.17
+                        unit_price_discounted: 0
+                        taxable: true
+                        removed: false
+                      eavprops:
+                        prop1: 1234
+                        prop2: "text string"
+                        prop3: false
+              Transaction:
+                summary: Example Transaction
+                value:
+                  type_uuid: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+                  external_origin: {"source": "PoS System"}
+                  payload:
+                    - external_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Trans|12345'
+                      external_parent_id: null
+                      external_child_id: null
+                      title: Transaction 12345
+                      class_props:
+                        external_parent_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Shop|12345'
+                        currency: AUD
+                        total: 12.34
+                        total_tax: 1.23
+                        total_paid: 12.34
+                        margin: 11.11
+                        discounts: 0.00
+                        rounding: 0.01
+                        tender: 12.35
+                        is_finalised: true
+                        is_cancelled: false
+                        is_on_hold: false
+                        transacted_at: "2017-07-21T17:32:28Z"
+                        line_items:
+                          - line_number: 1
+                            scanned_code: "0000000004011"
+                            external_product_id: 'c75bc2f4-c783-433c-8297-40cf58b677af|Prod|23456'
+                            title: Excellent Oranges 2kg
+                            quantity: 4
+                            price_current: 12.34
+                            price_sell: 12.34
+                            price_original: 12.34
+                            price_margin: 6.17
+                            line_tax: 4.936000001
+                            line_total: 49.36
+                            line_margin: 11.11
+                            is_promotion: false
+                            is_void: false
+                            is_removed: false
+                            eavprops:
+                              prop1: 1234
+                              prop2: "text string"
+                              prop3: false
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Outcome'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
+components:
+  schemas:
+    EAVProps:
+      type: object
+      description: |-
+        Extended Attribute Value Properties \
+        Can accomodate any number of properties and values formatted as a JSON object \
+        Can support nested objects and arrays \
+        Data is upserted on a key by key basis so it is safe to provide a partial object
+      example: >
+        {"prop1": 1234, "prop2": "text string", "prop3": false}
+      additionalProperties: 
+        true
+      default: {}
+    Department:
+      type: object
+      description: |-
+        The department object type is the fundimental building block of Store structure/Product taxonomy \
+        Top level departments are linked to the Shop as its parent \
+        Subsequent departments are nested within higher level departments \
+        Products are not typically linked to a department alone, but rather to Categories
+    Category:
+      type: object
+      description: |-
+        The Category object type is the final grouping (i.e. leaf node) of a Product taxonomy \
+        Each Category is expected to be linked to only one parent Department \
+        Each Product is expected to be linked to only one parent Category
+    Product:
+      type: object
+      description: |-
+        The product is the fundimental representation of something that can be sold \
+        Products are typically linked to a category as a parent which groups together similar items \
+        Individual products can be linked to multiple suppliers but will only have a single scannable barcode \
+        Product variants are represented as a product record per scannable barcode \
+        Multiple product variants can be linked to a single Base Product \
+        Products can be linked to multiple transactions at the line item level
+      properties:
+        ordering_index:
+          type: number
+          description: The order that products are displayed in the system either in the UI, reports or on a PoS terminal, if not used set to 0
+          example: 123
+          default: 0
+        qty:
+          type: number
+          description: The number of units of the product represented by a single scannable barcode, default is 1
+          example: 8
+          default: 0
+        unit_size:
+          type: number
+          description: The pyhsical size of the product expressed in unit_of_measure
+          example: 12.34
+          default: 0
+        unit_price:
+          type: number
+          description: The list price per unit of the product at the time of the transaction, this would include discounts that have changed the current sale price of the product but not any markdowns or discounts conditionally applied at the time of sale, i.e. sourced from the PoS product record
+          example: 12.34
+          default: 0
+        sku:
+          type: string
+          description: The scannable code of the product, typically a barcode or QR code, it will often match the product's SKU or UPC but may even be manually entered by checkout staff
+          example: "123456789013"
+          default: ""
+          deprecated: true
+        scanned_code:
+          type: string
+          description: The scannable code of the product, typically a barcode or QR code, it will often match the product's SKU or UPC but may even be manually entered by checkout staff
+          example: "0000000004011"
+          default: ""
+        unit_of_measure:
+          type: string
+          description: The unit of measure for the product which all quantities are expressed in. Must be one of the SI units, e.g. count, kg, l
+          example: kg
+          enum:
+            - count
+            - kg
+            - l
+            - m
+            - m2
+          default: ""
+        unit_price_cost:
+          type: number
+          description: The current cost price per unit of the product from the primary supplier
+          example: 12.34
+          default: 0
+        unit_price_discounted:
+          type: number
+          description: |-
+            Currently unused but can be used to present the unit_price as the normal recommended retail price of the product, with unit_price_discounted being the price with preset discounts applied \
+            Safe to leave as 0
+          example: 0
+          default: 0
+        taxable:
+          type: boolean
+          description: Indicates whether the product is subject to applicable taxes
+          example: true
+          default: false
+        removed:
+          type: boolean
+          description: Indicates whether the product has been removed from the system and is no longer available for sale
+          example: false
+          default: false
+    TransactionLineItem:
+      type: object
+      required:
+        - scanned_code
+        - external_product_id
+      properties:
+        line_number:
+          type: integer
+          description: The order that line items were added to the transaction and hence must be unique within the transaction
+          example: 1
+          default: null
+        scanned_code:
+          type: string
+          description: The scanned code of the product, typically a barcode or QR code, it should match the product's SKU or UPC
+          example: "0000000004011"
+        external_product_id:
+          type: string
+          format: extId
+          description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+          example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+        title:
+          type: string
+          description: The text that would be included on a receipt for the product, typically the name of the product
+          example: Excellent Oranges 2kg
+          default: Product Title in Tapestry
+        quantity:
+          type: number
+          description: The number of units of the product in the transaction as per the units defined for the product within Tapestry
+          example: 12.34
+          default: 0
+        price_current:
+          type: number
+          description: The list price per unit of the product at the time of the transaction, this would include discounts that have changed the current sale price of the product but not any markdowns or discounts conditionally applied at the time of sale, i.e. sourced from the PoS product record
+          example: 12.34
+          default: 0
+        price_sell:
+          type: number
+          description: The price paid per unit of the product at the time of the transaction, i.e. sourced from the PoS transaction records
+          example: 12.34
+          default: 0
+        price_original:
+          type: number
+          description: The normal recommended retail price of the product, if not tracked by the PoS system, set to the same as price_current
+          example: 12.34
+          default: 0
+        price_margin:
+          type: number
+          description: The difference between cost of one unit of the product and the current sale price of the product
+          example: 12.34
+          default: 0
+        line_tax:
+          type: number
+          description: The total amount of applicable tax included in this line item
+          example: 12.34
+          default: 0
+        line_total:
+          type: number
+          description: The total amount for the line item including all taxes and discounts, should be equal to the price_current x quantity
+          example: 12.34
+          default: 0
+        line_margin:
+          type: number
+          description: The difference between the line item cost of goods sold and the line item total, should be equal to the price_margin x quantity
+          example: 12.34
+          default: 0
+        is_promotion:
+          type: boolean
+          description: Indicates whether the line item is being sold under a promotion or discount
+          example: true
+          default: false
+        is_void:
+          type: boolean
+          description: Indicates whether the line item has been voided or cancelled but would still appear on the transaction
+          example: false
+          default: false
+        is_removed:
+          type: boolean
+          description: Indicates whether the line item has been removed from the transaction, i.e. was added by mistake
+          example: false
+          default: false
+        eavprops:
+          $ref: '#/components/schemas/EAVProps'
+    Transaction:
+      type: object
+      properties:
+        external_parent_id:
+          type: string
+          format: extId
+          description: |-
+            For Transaction Thread Types only, this overrides the use of "external_parent_id" on the primary payload and is used to link the transaction to its parent thread type, i.e. a Shop \
+            format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+          example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+          default: null
+        currency:
+          type: string
+          description: The currency of the transaction in ISO 4217 format
+          example: "AUD"
+          default: ""
+        total:
+          type: number
+          description: The total amount for the entire transaction including all line items, taxes and discounts, i.e. typically the same as the amount paid by the customer
+          example: 12.34
+          default: 0
+        total_tax:
+          type: number
+          description: The total tax amount for the entire transaction
+          example: 12.34
+          default: 0
+        total_paid:
+          type: number
+          description: The total amount paid by the customer to complete the transaction
+          example: 12.34
+          default: 0
+        margin:
+          type: number
+          description: The difference between the total cost of goods sold and the total paid by the customer
+          example: 12.34
+          default: 0
+        discounts:
+          type: number
+          description: The total monetary value of all discounts from a line items current listed sale price as applied to the transaction, i.e. coupons, discount cards, markdowns, etc.
+          example: 12.34
+          default: 0
+        rounding:
+          type: number
+          description: The difference between the total cost and the total paid as a result of rounding due to cash transactions
+          example: 12.34
+          default: 0
+        tender:
+          type: number
+          description: The amount of money presented by the customer to pay for the transaction
+          example: 12.34
+          default: 0
+        is_finalised:
+          type: boolean
+          description: Indicates whether the transaction is finalised and cannot be modified
+          example: true
+          default: true
+        is_cancelled:
+          type: boolean
+          description: Indicates whether the transaction has been cancelled and is no longer valid
+          example: false
+          default: false
+        is_on_hold:
+          type: boolean
+          description: Indicates the transaction has begun but for any reason is not actively being processed any longer though is not cancelled, e.g. till operator is transfering to another system
+          example: false
+          default: false
+        transacted_at:
+          type: string
+          format: date-time
+          description: The time when the transaction occurred. Typically would be related to either the time when the first line item was entered or when the transaction was completed. All times provided will be assumed to be UTC.
+          example: "2017-07-21T17:32:28Z"
+          default: utcNow
+        line_items:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/TransactionLineItem'
+    ClassRecord:
+      oneOf:
+        - $ref: '#/components/schemas/Department'
+        - $ref: '#/components/schemas/Category'
+        - $ref: '#/components/schemas/Product'
+        - $ref: '#/components/schemas/Transaction'
+        - $ref: '#/components/schemas/Collection'
+        - $ref: '#/components/schemas/Space'
+        - $ref: '#/components/schemas/Supplier'
+        - $ref: '#/components/schemas/SupplierProduct'
+        - $ref: '#/components/schemas/Promotion'
+        - $ref: '#/components/schemas/Deal'
+        - $ref: '#/components/schemas/BaseProduct'
+        - $ref: '#/components/schemas/Trade'
+        - $ref: '#/components/schemas/TradeDocument'
+        - $ref: '#/components/schemas/Staff'
+        - $ref: '#/components/schemas/Shift'
+        - $ref: '#/components/schemas/Customer'
+    Record:
+      type: object
+      properties:
+        external_id:
+          type: string
+          format: extId
+          description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+          example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+        external_child_id:
+          description: |- 
+            External ID of records that this record is the parent of, can be provided as a single string or an array of strings \
+            It is valid to provide the equivalent external_parent_id on the child record as well and up to the develper use whichever combination is most convenient
+          oneOf:
+            - type: string
+              format: extId
+              description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+              example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+            - type: array
+              uniqueItems: true
+              minItems: 0
+              items:
+                type: string
+                format: extId
+                description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+                example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+        external_parent_id:
+          description: |- 
+            External ID of records that this record is a child of, can be provided as a single string or an array of strings \
+            It is valid to provide the equivalent external_child_id on the parent record as well and up to the develper use whichever combination is most convenient
+          oneOf:
+            - type: string
+              format: extId
+              description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+              example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+            - type: array
+              uniqueItems: true
+              minItems: 0
+              items:
+                type: string
+                format: extId
+                description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+                example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+        assert_parents_complete:
+          type: array
+          description: |-
+            This is used to assert that all parent records of this record are included in this payload \
+            If this is not provided, the system will assume that external_parent_id represents a partial delta of relationships and will only upsert \
+            If it is included, any relationship not specified in this payload of the type listed will be archived from the system
+          items:
+            type: string
+            enum:
+              - department
+              - product
+              - transaction
+              - baseproduct
+              - supplier
+              - supplierproduct
+              - category
+              - collection
+              - space
+        assert_children_complete:
+          type: array
+          description: |-
+            This is used to assert that all child records of this record are included in this payload \
+            If this is not provided, the system will assume that external_child_id represents a partial delta of relationships and will only upsert \
+            If it is included, any relationship not specified in this payload of the type listed will be archived from the system
+          items:
+            type: string
+            enum:
+              - department
+              - product
+              - transaction
+              - baseproduct
+              - supplier
+              - supplierproduct
+              - category
+              - collection
+              - space
+        title:
+          type: string
+          example: Department of Data Upserting
+        class_props:
+          $ref: '#/components/schemas/ClassRecord'
+        eavprops:
+          $ref: '#/components/schemas/EAVProps'
+      required:
+        - external_id
+        - external_parent_id
+        - external_child_id
+        - title
+        - class_props
+        - eavprops
+    Upsert:
+      description: |-
+        The Upsert payload is used to submit a batch of records to Tapestry for processing \
+        It is valid to submit a single record or multiple records in the payload \
+        There will be a maximum size of the payload enforced by the API as well as a timeout for processing the payload \
+        If payloads fail regularly, it is recommended to break them down into smaller batches \
+        Currently, we recommend payloads between 50-250 records and the timeout is limited to 10 seconds \
+        The type_uuid is used to identify the thread type that the records belong to, \
+        It is expected that all records in the payload are of the same type and that the type_uuid matches the thread type being upserted \
+        The external_origin is used to track the source of the data and can be any valid JSON parsable object \
+        The payload is an array of Record objects that represent the data to be upserted
+      required:
+        - type_uuid
+        - external_origin
+        - payload
+      type: object
+      properties:
+        type_uuid:
+          type: string
+          format: uuid
+          description: The UUID of the thread type that this payload is for, all payload upserted records must be of the same type
+          example: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+        external_origin:
+          type: object
+          description: Used by the ETL systems to help track the source of the data but not strictly enforced, therefore can be any valid JSON parsable object include a single string. Can also be used to track versioning of the integration that last updated this thread.
+          example: > 
+            integration or {"source": "PoS System"}
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+    Outcome:
+      type: array
+      minItems: 0
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            description: The UUID of the thread record that was matched to the External ID provided
+            format: uuid
+            example: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+          etl_external_id:
+            type: string
+            format: extId
+            description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+            example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+          thread_type:
+            type: string
+            enum:
+              - department
+              - product
+              - transaction
+              - baseproduct
+              - supplier
+              - supplierproduct
+              - category
+              - collection
+              - space
+          operation:
+            type: string
+            description: Represents the result of the UPSERT operation for this thread record
+            enum:
+              - insert
+              - update
+              - ignore
+    Collection:
+      type: object
+      description: |-
+        This is a Stub for the Collection thread type \
+        The collection thread type is used to group together similar records that are not directly related to a specific thread type \
+        It can be used to represent a collection of products for example that would span multiple departments or categories such as Organic Certification, Manufacturer etc..
+    Shop:
+      type: object
+      description: |-
+        For the application Retail+, the Shop is the root Thread that owns all other threads. \
+        The shop thread type is protected due to its special status and hence cannot be created, only a limited set of properties can be modified. \
+        The shop thread type is used to represent a physical or online store that sells products to end consumers 
+      properties:
+        title:
+          type: string
+          description: The name of the shop, typically the name of the business
+          example: "My Retail Shop"
+        timezone:
+          type: string
+          description: The timezone of the shop in IANA format, e.g. "Australia/Sydney"
+          example: "Australia/Sydney"
+    Space:
+      type: object
+      description: |-
+        This is a Stub for the Space thread type \
+        The space thread type is used to represent a physical or virtual space that can contain products, or potentially in the future, other thread types \
+        It can be used to represent a specific area within a shop or a virtual space such as an online store
+    Promotion:
+      type: object
+      description: |-
+        This is a Stub for the Promotion thread type \
+        The promotion thread type is used to represent a specific promotion or discount that can be applied to products or transactions \
+        It can be used to represent a specific sale, discount code, or other promotional offer to an end consumer
+    Deal:
+      type: object
+      description: |-
+        This is a Stub for the Deal thread type \
+        The deal thread type is used to represent a specific agreement or arrangement between a supplier and a shop \
+        It can be used to represent a specific product or service that is being offered at a discounted price or under special terms
+    BaseProduct:
+      type: object
+      description: |-
+        This is a Stub for the Base Product thread type \
+        The Base Product thread type is used to represent a product that can have multiple variants \
+        Each variant is represented as a separate product record with its own scannable barcode \
+        The Base Product is used to group together all variants of a product that share the same attributes such as name, description, and category
+    Supplier:
+      type: object
+      description: |-
+        The supplier thread type is used to represent a specific supplier or vendor that provides products to a shop \
+        It can be used to represent a specific company or individual that supplies products to a shop and associated general trading terms established between the two legal entities
+      properties:
+        abn:
+          type: string
+          description: The Australian Business Number (ABN) of the supplier, if applicable. This is not currently independantly validated by Tapestry.
+          example: "12345678901"
+          default: ""
+    SupplierProduct:
+      type: object
+      description: |-
+        This is a Stub for the Supplier Product thread type \
+        The supplier product thread type is used to represent a specific product that is supplied by a supplier to a shop \
+        It can be used to represent a specific product that is supplied by a supplier to a shop, including its cost price, purchase conditions and other trading terms specific to that product from that supplier
+      properties:
+        expected_code:
+          type: string
+          description: The stock code used to identify the product from the supplier as it would appear on Purchase Orders or Invoices, typically the SKU or UPC of the product as provided by the supplier
+          example: "0000000004011"
+          default: ""
+        expected_description:
+          type: string
+          description: The description of the product at is would appear on Purchase Orders or Invoices, typically the name of the product as provided by the supplier
+          example: "Excellent Oranges 2kg"
+          default: ""
+        unit_cost_price:
+          type: number
+          description: The expected cost price per unit of the product from the supplier, this is the price that the shop pays to the supplier for the product
+          example: 6.17
+          default: 0
+        order_units:
+          type: number
+          description: The minimum number of units that must be ordered from the supplier to pay the specified unit cost price, this is typically used to determine the minimum order quantity for the product
+          example: 12
+          default: 1
+        currency:
+          type: string
+          description: The currency of the product cost price in ISO 4217 format, e.g. AUD, USD
+          example: "AUD"
+          default: ""
+    Trade:
+      type: object
+      description: |-
+        This is a Stub for the Trade thread type \
+        The trade thread type is used to represent a specific trade or transaction between a supplier and a shop and is expected to be resolved by going through multiple stages, with the potential for revisions \
+        It can be used to represent a specific purchase or transaction that has occurred between a supplier and a shop, including the products, quantities, and prices involved
+    TradeDocument:
+      type: object
+      description: |-
+        This is a Stub for the Trade Document thread type \
+        The trade document thread type is used to represent a specific document or record related to a trade or transaction between a supplier and a shop \
+        It can be used to represent a specific purchase order, invoice, shipping weighbill or other document related to a trade or transaction between a supplier and a shop
+    Staff:
+      type: object
+      description: |-
+        This is a Stub for the Staff thread type \
+        The staff thread type is used to represent a specific staff member or employee of a shop \
+        It can be used to represent a specific person who works for a shop and is involved in the day-to-day operations of the business
+    Shift:
+      type: object
+      description: |-
+        This is a Stub for the Shift thread type \
+        The shift thread type is used to represent a specific shift or work period for a staff member or employee of a shop \
+        It can be used to represent a specific time period during which a staff member is working, including the start and end times, and any breaks taken
+    Customer:
+      type: object
+      description: |-
+        This is a Stub for the Customer thread type \
+        The customer thread type is used to represent a specific customer or client of a shop \
+        It can be used to represent a specific person or organization that purchases products from a shop, including their purchase history but excluding any personally identifying information such as name, address, phone number, etc.
+    thread_department:
+      properties:
+        external_id:
+          format: character varying
+          type: string
+        external_origin:
+          format: jsonb
+        type_uuid:
+          description: >-
+            Note:
+
+            This is a Foreign Key to `template_thread.id`.<fk
+            table='template_thread' column='id'/>
+          format: uuid
+          type: string
+        federated_thread_uuid:
+          format: uuid
+          type: string
+        equivalent_key:
+          format: uuid
+          type: string
+        owner_id:
+          format: uuid
+          type: string
+        eavprops:
+          format: jsonb
+        created_at:
+          format: timestamp without time zone
+          type: string
+        updated_at:
+          format: timestamp without time zone
+          type: string
+        deleted_at:
+          format: timestamp without time zone
+          type: string
+        deleted_by:
+          format: uuid
+          type: string
+        adjacents:
+          format: json
+        relationships:
+          format: json
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+            This is a Foreign Key to `thread.id`.<fk table='thread' column='id'/>
+          format: uuid
+          type: string
+        thread_type:
+          format: character varying
+          type: string
+        title:
+          format: character varying
+          type: string
+        shop_id:
+          format: uuid
+          type: string
+      type: object
+    thread_transaction:
+      properties:
+        external_id:
+          format: character varying
+          type: string
+        external_origin:
+          format: jsonb
+        type_uuid:
+          description: >-
+            Note:
+
+            This is a Foreign Key to `template_thread.id`.<fk
+            table='template_thread' column='id'/>
+          format: uuid
+          type: string
+        federated_thread_uuid:
+          format: uuid
+          type: string
+        equivalent_key:
+          format: uuid
+          type: string
+        owner_id:
+          format: uuid
+          type: string
+        eavprops:
+          format: jsonb
+        created_at:
+          format: timestamp without time zone
+          type: string
+        updated_at:
+          format: timestamp without time zone
+          type: string
+        deleted_at:
+          format: timestamp without time zone
+          type: string
+        deleted_by:
+          format: uuid
+          type: string
+        adjacents:
+          format: json
+        relationships:
+          format: json
+        line_items:
+          format: json
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+          format: uuid
+          type: string
+        thread_type:
+          format: character varying
+          type: string
+        title:
+          format: character varying
+          type: string
+        currency:
+          format: character varying
+          type: string
+        total:
+          format: double precision
+          type: number
+        total_tax:
+          format: double precision
+          type: number
+        total_paid:
+          format: double precision
+          type: number
+        margin:
+          format: double precision
+          type: number
+        discounts:
+          format: double precision
+          type: number
+        rounding:
+          format: double precision
+          type: number
+        tender:
+          format: double precision
+          type: number
+        is_finalised:
+          format: boolean
+          type: boolean
+        is_cancelled:
+          format: boolean
+          type: boolean
+        is_on_hold:
+          format: boolean
+          type: boolean
+        transacted_at:
+          format: timestamp without time zone
+          type: string
+      type: object
+    thread_product:
+      properties:
+        external_id:
+          format: character varying
+          type: string
+        external_origin:
+          format: jsonb
+        type_uuid:
+          description: >-
+            Note:
+
+            This is a Foreign Key to `template_thread.id`.<fk
+            table='template_thread' column='id'/>
+          format: uuid
+          type: string
+        federated_thread_uuid:
+          format: uuid
+          type: string
+        equivalent_key:
+          format: uuid
+          type: string
+        owner_id:
+          format: uuid
+          type: string
+        eavprops:
+          format: jsonb
+        created_at:
+          format: timestamp without time zone
+          type: string
+        updated_at:
+          format: timestamp without time zone
+          type: string
+        deleted_at:
+          format: timestamp without time zone
+          type: string
+        deleted_by:
+          format: uuid
+          type: string
+        adjacents:
+          format: json
+        relationships:
+          format: json
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+          format: uuid
+          type: string
+        thread_type:
+          format: character varying
+          type: string
+        title:
+          format: character varying
+          type: string
+        ordering_index:
+          format: integer
+          type: integer
+        qty:
+          format: double precision
+          type: number
+        unit_size:
+          format: double precision
+          type: number
+        unit_price:
+          format: double precision
+          type: number
+        sku:
+          format: character varying
+          type: string
+        unit_of_measure:
+          format: character varying
+          type: string
+        unit_price_cost:
+          format: double precision
+          type: number
+        unit_price_discounted:
+          format: double precision
+          type: number
+        taxable:
+          format: boolean
+          type: boolean
+        removed:
+          format: boolean
+          type: boolean
+        shop_id:
+          format: uuid
+          type: string
+        departments:
+          format: jsonb
+        categories:
+          format: jsonb
+        spaces:
+          format: jsonb
+        collections:
+          format: jsonb
+        current_stock:
+          format: double precision
+          type: number
+        is_stocked:
+          format: boolean
+          type: boolean
+        authority_id:
+          format: uuid
+          type: string
+        authority_name:
+          format: text
+          type: string
+        authority_title:
+          format: text
+          type: string
+        authority_description:
+          format: text
+          type: string
+      type: object
+    thread_category:
+      properties:
+        external_id:
+          format: character varying
+          type: string
+        external_origin:
+          format: jsonb
+        type_uuid:
+          description: >-
+            Note:
+
+            This is a Foreign Key to `template_thread.id`.<fk
+            table='template_thread' column='id'/>
+          format: uuid
+          type: string
+        federated_thread_uuid:
+          format: uuid
+          type: string
+        equivalent_key:
+          format: uuid
+          type: string
+        owner_id:
+          format: uuid
+          type: string
+        eavprops:
+          format: jsonb
+        created_at:
+          format: timestamp without time zone
+          type: string
+        updated_at:
+          format: timestamp without time zone
+          type: string
+        deleted_at:
+          format: timestamp without time zone
+          type: string
+        deleted_by:
+          format: uuid
+          type: string
+        adjacents:
+          format: json
+        relationships:
+          format: json
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+            This is a Foreign Key to `thread.id`.<fk table='thread' column='id'/>
+          format: uuid
+          type: string
+        thread_type:
+          format: character varying
+          type: string
+        title:
+          format: character varying
+          type: string
+        shop_id:
+          format: uuid
+          type: string
+      type: object
+    thread:
+      properties:
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+          format: uuid
+          type: string
+        external_id:
+          format: character varying
+          type: string
+        external_origin:
+          format: jsonb
+        thread_type:
+          format: character varying
+          type: string
+        type_uuid:
+          description: >-
+            Note:
+
+            This is a Foreign Key to `template_thread.id`.<fk
+            table='template_thread' column='id'/>
+          format: uuid
+          type: string
+        federated_thread_uuid:
+          format: uuid
+          type: string
+        title:
+          format: character varying
+          type: string
+        created_at:
+          format: timestamp without time zone
+          type: string
+        updated_at:
+          format: timestamp without time zone
+          type: string
+        owner_id:
+          format: uuid
+          type: string
+        equivalent_key:
+          format: uuid
+          type: string
+        eavprops:
+          format: jsonb
+        deleted_at:
+          format: timestamp without time zone
+          type: string
+        deleted_by:
+          format: uuid
+          type: string
+        review_required:
+          format: boolean
+          type: boolean
+        internal:
+          format: boolean
+          type: boolean
+        last_reviewed_at:
+          format: timestamp without time zone
+          type: string
+      type: object
+    template_thread:
+      properties:
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+          format: uuid
+          type: string
+        thread_type:
+          format: character varying
+          type: string
+        version:
+          format: character varying
+          type: string
+        update_at:
+          format: timestamp without time zone
+          type: string
+        updated_by:
+          format: character varying
+          type: string
+      type: object
+  requestBodies:
+    Upsert:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Upsert'
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: The API key to access the PostgREST ETL service. This key is required for all requests to the API. \
+        It should be provided in the header of the request
+
+security:
+  - apiKey: []

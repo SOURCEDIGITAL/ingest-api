@@ -1,0 +1,109 @@
+openapi: 3.0.4
+info:
+  title: Swagger Tapestry Auth Protocol
+  description: |-
+    This is an incomplete description of the Tapestry API endpoint used for generating JWT tokens for use with all other Tapestry APIs.
+  contact:
+    email: team@tapestry.ai
+  license:
+    name: Confidential
+    url: https://api-gateway.tapestry.dev
+  version: 1.0.0
+servers:
+  - url: https://api-gateway.tapestry.dev
+tags:
+  - name: tapestry
+    description: Everything for tapestry
+paths:
+  /graphql:
+    post:
+      tags:
+        - tapestry
+      summary: Fetch Auth Token
+      description: This endpoint uses the GraphQL API to fetch an auth token for a user.
+      operationId: fetchToken
+      requestBody:
+        description: GraphQL Request Format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Request'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+components:
+  schemas:
+    Request:
+      type: object
+      description: |-
+        TBC
+      example: >
+        {"operationName": "Login", "variables": {"username": "user", "password": "pass"}, "query": "mutation Login($password: String!, $username: String!) {\n  login(password: $password, username: $username) {\n    access_token\n    expires_in\n    token_type\n    userId\n    profile {\n      ...CoreUserFields\n      }\n    }\n}\n\nfragment CoreUserFields on UserProfile {\n  id\n  }"}
+      properties:
+        operationName:
+          type: string
+          description: The name of the GraphQL operation to execute
+          example: "Login"
+        variables:
+          type: object
+          description: The variables to pass to the GraphQL operation
+          additionalProperties:
+            type: string
+            description: The value of the variable, can be a string, number, or boolean
+            properties:
+              username:
+                type: string
+                description: The username of the user to authenticate
+                example: ""
+              password:
+                type: string
+                description: The password of the user to authenticate
+                example: ""
+        query:
+          type: string
+          description: The GraphQL query to execute
+          example: |-
+            mutation Login($password: String!, $username: String!) {\n  login(password: $password, username: $username) {\n    access_token\n    expires_in\n    token_type\n    userId\n    profile {\n      ...CoreUserFields\n      }\n    }\n}\n\nfragment CoreUserFields on UserProfile {\n  id\n  }
+    AuthResponse:
+      type: object
+      description: |-
+        TBC
+      properties:
+        data:
+          type: object
+          description: The data returned from the GraphQL operation
+          properties:
+            login:
+              type: object
+              description: The login response
+              properties:
+                access_token:
+                  type: string
+                  description: The JWT access token for the user. Used as an Authentication token with Prefix "bearer"
+                  example: "eyJh..."
+                expires_in:
+                  type: integer
+                  description: The number of seconds until the token expires
+                  example: 3600
+                token_type:
+                  type: string
+                  description: The type of the token, typically "bearer"
+                  example: "bearer"
+                userId:
+                  type: string
+                  description: The ID of the user
+                  example: "b8632866-a104-4f85-a0f4-fb8fef2730b8"
+                profile:
+                  type: object
+                  description: The profile of the user as described by the mutation in the query string of the request
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the user profile
+                      format: uuid
+                      example: "b8632866-a104-4f85-a0f4-fb8fef2730b8"
