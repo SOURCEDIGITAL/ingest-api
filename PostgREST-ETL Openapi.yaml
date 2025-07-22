@@ -117,6 +117,48 @@ paths:
           description: Database Connection Error
         '504':
           description: Database Conenction Pool Error
+  /thread_shop:
+    get:
+      tags:
+        - fetch
+      summary: Fetch all owned Shops
+      description: Fetch all owned Shops in Tapestry including their relationships
+      operationId: getShops
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/thread_shop'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Conenction Pool Error
   /thread_department:
     get:
       tags:
@@ -991,6 +1033,68 @@ components:
         This is a Stub for the Customer thread type \
         The customer thread type is used to represent a specific customer or client of a shop \
         It can be used to represent a specific person or organization that purchases products from a shop, including their purchase history but excluding any personally identifying information such as name, address, phone number, etc.
+    thread_shop:
+      properties:
+        external_id:
+          format: character varying
+          type: string
+        external_origin:
+          format: jsonb
+        type_uuid:
+          description: >-
+            Note:
+
+            This is a Foreign Key to `template_thread.id`.<fk
+            table='template_thread' column='id'/>
+          format: uuid
+          type: string
+        federated_thread_uuid:
+          format: uuid
+          type: string
+        equivalent_key:
+          format: uuid
+          type: string
+        owner_id:
+          format: uuid
+          type: string
+        eavprops:
+          format: jsonb
+        created_at:
+          format: timestamp without time zone
+          type: string
+        updated_at:
+          format: timestamp without time zone
+          type: string
+        deleted_at:
+          format: timestamp without time zone
+          type: string
+        deleted_by:
+          format: uuid
+          type: string
+        adjacents:
+          format: json
+        relationships:
+          format: json
+        id:
+          description: |-
+            Note:
+            This is a Primary Key.<pk/>
+            This is a Foreign Key to `thread.id`.<fk table='thread' column='id'/>
+          format: uuid
+          type: string
+        thread_type:
+          format: character varying
+          type: string
+        title:
+          format: character varying
+          type: string
+        timezone:
+          format: character varyinh
+          type: string
+          description: The timezone of the shop in IANA format, e.g. "Australia/Sydney"
+          example: "Australia/Sydney"
+        
+      type: object
     thread_department:
       properties:
         external_id:
