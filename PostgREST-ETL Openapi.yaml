@@ -774,6 +774,7 @@ components:
               description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
               example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
             - type: array
+              description: An array of External ID's that this record is the parent of
               uniqueItems: true
               minItems: 0
               items:
@@ -791,6 +792,7 @@ components:
               description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
               example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
             - type: array
+              description: An array of External ID's that this record is the child of
               uniqueItems: true
               minItems: 0
               items:
