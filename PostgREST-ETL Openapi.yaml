@@ -477,7 +477,54 @@ paths:
         '503':
           description: Database Connection Error
         '504':
-          description: Database Conenction Pool Error
+          description: Database Connection Pool Error
+  /rpc/delete_thread:
+    post:
+      tags:
+        - modify
+      summary: Submit DELETE payload
+      description: Submit payload for a soft DELETE to Tapestry
+      operationId: deleteThread
+      requestBody:
+        description: Payload Format
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delete'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Outcome'
+        '400':
+          description: Invalid Request Body or Parsing Error
+        '401':
+          description: Authentication Error
+        '403':
+          description: Privilege Error
+        '404':
+          description: Resource not found
+        '405':
+          description: Content cannot be modified
+        '406':
+          description: Invalid Schema
+        '409':
+          description: Constraint Violation
+        '415':
+          description: The Content-Type sent in the request is invalid
+        '416':
+          description: An invalid range was specified for Limits and Pagination
+        '422':
+          description: Validation exception
+        '500':
+          description: General Database Error
+        '503':
+          description: Database Connection Error
+        '504':
+          description: Database Connection Pool Error
 components:
   schemas:
     EAVProps:
@@ -881,6 +928,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Record'
+    Delete:
+      description: |-
+        The Delete payload is used to submit a batch of records to Tapestry for soft deletion \
+        It is valid to submit a single record or multiple records in the payload as long as they are in the format of an array \
+        The Soft Delete operation is used to remove records from the system without permanently deleting them \
+        Relationship records are deleted permanently, but the thread record itself is soft deleted \
+      required:
+        - thread_type_uuid
+        - external_ids
+      type: object
+      properties:
+        thread_type_uuid:
+          type: string
+          format: uuid
+          description: The UUID of the thread type that this payload is for, all payload deleted records must be of the same type. Records of other thread types will be ignored.
+          example: 'c75bc2f4-c783-433c-8297-40cf58b677af'
+        external_ids:
+          type: array
+          description: |-
+            An array of External ID's that represent the records to be soft deleted \
+            The format of the External ID is \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+          items:
+            type: string
+            format: extId
+            description: format \<rootUUID\>|\<sourceCollection\>|\<sourcePrimaryKey\>
+            example: c75bc2f4-c783-433c-8297-40cf58b677af|Table|12345
+            minItems: 1
+            maxItems: 2000
+            uniqueItems: true
     Outcome:
       type: array
       minItems: 0
